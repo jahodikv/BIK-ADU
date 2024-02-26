@@ -79,3 +79,20 @@
 
 ### 5
 
+cp /etc/shadow /home/user1/shadow_copy
+chown root:root /home/user1/shadow_copy
+chmod 600 /home/user1/shadow_copy
+su user1
+cat /home/user1/shadow_copy
+su -
+
+setfacl -m u:defined_user:r /home/user1/shadow_copy
+getfacl /home/user1/shadow_copy
+
+su user1
+
+cat /home/user1/shadow_copy
+
+## Cviceni 3
+
+### 1
