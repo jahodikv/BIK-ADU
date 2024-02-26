@@ -60,3 +60,22 @@
 ## Cviceni 2
 
 
+### 1
+
+    echo "$1:x:$2:101::/home/$1:/bin/bash" >> /etc/passwd
+    echo "$1:!!:19732:0:99999:7:::" >> /etc/shadow
+    mkdir /home/$1
+    cp ~/.bashrc /home/$1
+    cp ~/.profile /home/$1
+    chown -R $1 /home/$1
+    chmod $1 /home/$1
+
+### 4
+
+    vi /etc/sudoers
+    visudo
+    $1 ALL=(ALL) NOPASSWD: /bin/chown
+
+
+### 5
+
