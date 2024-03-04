@@ -30,7 +30,7 @@
     mkdir /home/user2
 
     chown user1 /home/user1
-    chown user1 /home/user1
+    chown user2 /home/user2
 
 
 ### 7.2
@@ -38,8 +38,8 @@
     useradd -u 2003 -m -d /home/user3 user3
     useradd -u 2004 -m -d /home/user4 user4
     groupadd -g 102 adu2
-    usermod -ag adu2 user3
-    usermod -aG adu2 user4
+    usermod -g adu2 user3
+    usermod -G adu2 user4
 
 ### 8
 
@@ -53,7 +53,7 @@
     vi /etc/pam.d/system-auth
     password sufficient pam_unix.so use_authtok md5 shadow remember=13
 
-    [ ! -f /etc/security/opasswd ] && touch /etc/security/opasswd
+    touch /etc/security/opasswd
 
     vi /etc/security/pwquality.conf 
 
@@ -67,8 +67,10 @@
     mkdir /home/$1
     cp ~/.bashrc /home/$1
     cp ~/.profile /home/$1
+    cp ~/.bashrc /etc/skel/
+    cp ~/.profile /etc/skel/
     chown -R $1 /home/$1
-    chmod $1 /home/$1
+    chmod 755 /home/$1
 
 ### 4
 
@@ -79,19 +81,19 @@
 
 ### 5
 
-cp /etc/shadow /home/user1/shadow_copy
-chown root:root /home/user1/shadow_copy
-chmod 600 /home/user1/shadow_copy
-su user1
-cat /home/user1/shadow_copy
-su -
+    cp /etc/shadow /home/user1/shadow_copy
+    chown root:root /home/user1/shadow_copy
+    chmod 600 /home/user1/shadow_copy
+    su user1
+    cat /home/user1/shadow_copy
+    su -
 
-setfacl -m u:defined_user:r /home/user1/shadow_copy
-getfacl /home/user1/shadow_copy
+    setfacl -m u:user1:r-- /home/user1/shadow_copy
+    getfacl /home/user1/shadow_copy
 
-su user1
+    su user1
 
-cat /home/user1/shadow_copy
+    cat /home/user1/shadow_copy
 
 ## Cviceni 3
 
