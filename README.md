@@ -98,3 +98,29 @@
 ## Cviceni 3
 
 ### 1
+
+    mkdir /export/home/user1
+    useradd -m -d /export/home/user1 -s /bin/pfksh user1
+    passwd user1
+    mkdir /export/home/user2
+    useradd -m -d /export/home/user2 -s /bin/pfksh user2
+    passwd user2
+    tar cvf archiv.tar user_attr
+    mv user_attr.orig_S11 user_attr
+    ssh root@localhost
+
+### 2
+
+    echo "super_reader::::" >> /etc/security/prof_attr
+    echo "super_reader:suser:cmd:::/usr/bin/more:euid=0" >> /etc/security/exec_attr
+    usermod -P super_reader user1
+
+### 3
+
+    roleadd -m -d /export/home/ctenar -P super_reader -s /bin/pfksh ctenar
+    passwd ctenar
+    usermod -R ctenar user1
+
+### 6
+
+    man ppriv
