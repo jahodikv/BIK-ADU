@@ -105,8 +105,8 @@
     mkdir /export/home/user2
     useradd -m -d /export/home/user2 -s /bin/pfksh user2
     passwd user2
-    tar cvf archiv.tar user_attr
-    mv user_attr.orig_S11 user_attr
+    tar cvf backup.tar /etc/user_attr
+    vi /etc/user_attr
     ssh root@localhost
 
 ### 2
@@ -124,3 +124,9 @@
 ### 6
 
     man ppriv
+
+## Cviceni 4 Linux
+
+
+
+## Cviceni 4 Solaris
