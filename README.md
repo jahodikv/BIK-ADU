@@ -490,3 +490,27 @@
 
 
     mdadm -a /dev/md0 -l5 -n3 /dev/nvme0n1p11
+
+### 5
+
+#### 0a
+
+    df -h                   # find the name of the physical disk and the name of partition(s)
+    fdisk /dev/nvme0n1      # create two new partitions (partitions p3 and p4 on this disk)
+                            # use sub-commands "m, p (print), n (new, -> p (primary partition)),
+                            # p (print)".... finally "w" (write)
+                            # check for new devices in /dev/  (/dev/nvme0n1p3, p4)
+
+    partprobe               # inform OS kernel about new partitions created (alternative is to reboot the system)
+#### 1
+    mkfs -t ext4 /dev/nvme0n1p3
+    mkdir /new1
+    mount /dev/nvme0p3 /new1
+    mkfs -t ext4 /dev/nvme0n1p4
+    mkdir /new2
+    mount /dev/nvme0p4 /new2
+    df -Th
+    lsblk -o+FSTYPE /dev/nvme0n1p3
+    man fstab   # LINUX
+    vi /etc/fstab   # add lines for /new1 and /new2 directories
+
