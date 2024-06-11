@@ -125,11 +125,11 @@
 
     man ppriv
 
-## Cviceni 4 Linux
+## Cviceni 4 Linux CentOS
 
 ### 2
 
-    cd /dev/zero
+    cd /dev
     ls -l /dev/zero
     sudo mknod only_zeroes c 1 5
     dd if=only_zeroes bs=1k  count=32k of=/var/tmp/32MBzeroes
@@ -138,16 +138,99 @@
 
 ### 3
 
-    3/ Create and attach 2nd virtual disk to Solaris VirtualBox virtual computers
+    3/ Create and attach 2nd virtual disk to CentOS VirtualBox virtual computers
 
-    Shut down Solaris (if running).
-    Choose Solaris in VirtualBox, Click na Settings and choose Storage.
+    Shut down CentOS (if running).
+    Choose CentOS in VirtualBox, Click na Settings and choose Storage.
     Click on Controller: SATA, then + (Add hard disk) and then Create Disk Image.
     Choose VMDK and Fixed Size. Use about 500MB a let it be created (Create).
-    Confirm, start Solaris.
+    Confirm, start CentOs.
+    lsblk
     ls -l /dev
 
 ### 4 
+
+
+ fdisk /dev/sdb
+ fdisk> n
+ Partition type: p
+ Partifiton number: 1
+ First sector: default
+ Last sector: +125M
+ fdisk> n
+ Partition type: p
+ Partifiton number: 2
+ First sector: default
+ Last sector: +125M
+ fdisk> n
+ Partition type: p
+ Partifiton number: 3
+ First sector: default
+ Last sector: +125M
+ fdisk> n
+ Partition type: p
+ Partifiton number: 4
+ First sector: default
+ Last sector: +125M
+
+ fdisk> w
+
+
+### 5
+
+ lsblk
+ fdisk /dev/sda
+ fdisk> n
+ Partition type: p
+ Partifiton number: 3
+ First sector: default
+ Last sector: +125M
+ fdisk> n
+ Partition type: p
+ Partifiton number: 4
+ First sector: default
+ Last sector: +125M
+ fdisk> w
+
+ partprobe
+
+
+
+### 6 
+
+
+    sudo fdisk -l /dev/sdb
+    sudo dd if=/dev/sdb of=jahodik.mbr bs=512 count=1
+    xxd jahodik.mbr
+
+
+## Cviceni 4 Solaris
+
+### 2
+
+    cd /dev
+    ls -l /dev/zero
+    sudo mknod only_zeroes c 1 5
+    dd if=only_zeroes bs=1k  count=32k of=/var/tmp/32MBzeroes
+    od -cx /var/tmp/32MBzeroes
+
+
+### 3
+
+    3/ Create and attach 2nd virtual disk to CentOS VirtualBox virtual computers
+
+    Shut down CentOS (if running).
+    Choose CentOS in VirtualBox, Click na Settings and choose Storage.
+    Click on Controller: SATA, then + (Add hard disk) and then Create Disk Image.
+    Choose VMDK and Fixed Size. Use about 500MB a let it be created (Create).
+    Confirm, start CentOs.
+    lsblk
+    ls -l /dev
+
+### 4 
+
+
+Solaris
 
     fdisk /dev/rdsk/c1t2d0p0
 
@@ -184,6 +267,7 @@
 
 ### 5
 
+
     df -h                   # find the name of the physical disk and the name of partition(s)
     lsblk /dev/nvme0n1
     fdisk /dev/nvme0n1      # create two new partitions (partitions p3 and p4 on this disk)
@@ -196,17 +280,9 @@
 
 ### 6 
 
-    # List MBR content
-    sudo fdisk -l /dev/sdX
-
-    # Dump MBR content into a file
-    sudo dd if=/dev/sdX of=your_surname.mbr bs=512 count=1
-
-    # Display hexadecimal content of the file
-    xxd your_surname.mbr
-
-
-## Cviceni 4 Solaris
+    sudo fdisk -l /dev/sdb
+    sudo dd if=/dev/sdb of=jahodik.mbr bs=512 count=1
+    xxd jahodik.mbr
 
 
 ## Cviceni 5
