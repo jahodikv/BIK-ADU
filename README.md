@@ -305,7 +305,7 @@ Solaris
 
 ### 2
     
-    lsblk /dev/nvme0n1
+    
     pvcreate /dev/sda3 /dev/sda4      
     pvdisplay; pvs; pgscan
     vgcreate VG-BIE-ADU /dev/sda3 /dev/sda4   # create a new volume group
@@ -387,17 +387,40 @@ Solaris
 
 ### 4
 
+### A.0 preparation
+
+fdisk /dev/sda
+
+partprobe
+
+pvcreate /dev/sda3 /dev/sda4      
+pvdisplay; pvs; pgscan
+vgcreate VG0 /dev/sda3 /dev/sda4 
+lvcreate -L 100m VG-BIE-ADU 
+lvcreate -L 100m VG-BIE-ADU 
+lvcreate -L 100m VG-BIE-ADU 
+lvcreate -L 100m VG-BIE-ADU 
+lvcreate -L 100m VG-BIE-ADU 
+lvcreate -L 100m VG-BIE-ADU 
+lvcreate -L 100m VG-BIE-ADU 
+
+
+
 #### A.1
     lvdisplay VG0     # display logical volumes in volume group VG0
-    mdadm -C /dev/md0 -l1 -n2 /dev/VG0/lv1 /dev/VG0/lv2
+    mdadm -C /dev/md0 -l1 -n2 /dev/VG0/lvol0 /dev/VG0/lvol1
     mdadm -D /dev/md0
     mkfs -t ext3 /dev/md0
     mkdir /fs1
     mount /dev/md0 /fs1
     df -h
-    mdadm --manage /dev/md0 --fail /dev/VG0/lv1
-    mdadm --manage /dev/md0 --remove /dev/VG0/lv1
-    mdadm /dev/md0 -a /dev/VG0/lv3
+
+    mdadm --manage /dev/md0 --add-spare /dev/VG0/lvol2
+    mdadm --manage /dev/md0 --fail /dev/VG0/lvol0
+
+    mdadm -D /dev/md0
+    mdadm --manage /dev/md0 --remove /dev/VG0/lvol0
+    mdadm /dev/md0 -a /dev/VG0/lvol2
     mdadm -D /dev/md0
 
 
@@ -405,21 +428,21 @@ Solaris
     mdadm --stop /dev/md0
     mdadm -Ds
 
-#### A.1
+#### A.2
 
-    mdadm -C -v /dev/md0 -l5 -n3 /dev/VG0/lv4 /dev/VG0/lv5 /dev/VG0/lv6
+    mdadm -C -v /dev/md0 -l5 -n3 /dev/VG0/lvol3 /dev/VG0/lvol4 /dev/VG0/lvol5
     mdadm -D /dev/md0
-    mkfs ....
-    mount ......
+    mkfs -t ext3 /dev/md0
+    mount /dev/md0 /fs1
     df -h
-    mdadm /dev/md0 -a /dev/VG0/lv7
-    mdadm --manage … --fail
+    mdadm /dev/md0 -a /dev/VG0/lvol6
+    mdadm --manage /dev/md0 --fail /dev/VG0/lvol4
     mdadm -D /dev/md0
-    mdadm --manage … --remove
+    mdadm --manage /dev/md0 --remove /dev/VG0/lvol4
     mdadm -D /dev/md0
 
     umount /fs1
-    mdadm --stop ....
+    mdadm --stop /dev/md0
     mdadm -Ds
 
 
