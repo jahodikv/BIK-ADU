@@ -544,17 +544,17 @@ lvcreate -L 100m VG-BIE-ADU
 #### B.1
 
 
-    mdadm -C /dev/md0 -l1 -n2 /dev/nvme0n1p5 /dev/nvme0n1p6
+    mdadm -C /dev/md0 -l1 -n2 /dev/sda5 /dev/sda6
     mdadm -D /dev/md0
     mkfs -t ext3 /dev/md0
     mkdir /fs1
     mount /dev/md0 /fs1
     df -h
-    mdadm --manage /dev/md0 --fail /dev/nvme0n1p6
+    mdadm --manage /dev/md0 --fail /dev/sda6
     mdadm -D /dev/md0
-    mdadm --manage /dev/md0 --remove /dev/nvme0n1p6
+    mdadm --manage /dev/md0 --remove /dev/sda6
     mdadm -D /dev/md0
-    mdadm /dev/md0 -a /dev/nvme0n1p11
+    mdadm /dev/md0 -a /dev/sda11
     mdadm -D /dev/md0
 
     umount /fs1
@@ -563,9 +563,9 @@ lvcreate -L 100m VG-BIE-ADU
 
 #### B.2
 
-    mdadm -C /dev/md0 -l1 -n2 /dev/nvme0n1p5 /dev/nvme0n1p6
-    mdadm -C /dev/md1 -l1 -n2 /dev/nvme0n1p7 /dev/nvme0n1p8
-    mdadm -C /dev/md2 -l1 -n2 /dev/nvme0n1p9 /dev/nvme0n1p10
+    mdadm -C /dev/md0 -l1 -n2 /dev/sda5 /dev/sda6
+    mdadm -C /dev/md1 -l1 -n2 /dev/sda7 /dev/sda8
+    mdadm -C /dev/md2 -l1 -n2 /dev/sda9 /dev/sda10
     pvcreate /dev/md0 /dev/md1 /dev/md2
     vgcreate vg0 /dev/md0 /dev/md1 /dev/md2
     lvcreate -L 100M vg0
@@ -582,34 +582,11 @@ lvcreate -L 100m VG-BIE-ADU
     mdadm --stop /dev/md2
     mdadm -Ds
 
-    mdadm -C /dev/md0 -l5 -n3 /dev/nvme0n1p5 /dev/nvme0n1p6 /dev/nvme0n1p7
-    mdadm -C /dev/md1 -l5 -n3 /dev/nvme0n1p8 /dev/nvme0n1p9 /dev/nvme0n1p10
+    mdadm -C /dev/md0 -l5 -n3 /dev/sda5 /dev/sda6 /dev/sda7
+    mdadm -C /dev/md1 -l5 -n3 /dev/sda8 /dev/sda9 /dev/sda10
     pvcreate /dev/md0
     pvcreate /dev/md1
     vgcreate vg0 /dev/md0 /dev/md1
+    lvcreate -L 100m vg0 
 
-
-    mdadm -a /dev/md0 -l5 -n3 /dev/nvme0n1p11
-
-
-#### 0a
-
-    df -h                   # find the name of the physical disk and the name of partition(s)
-    fdisk /dev/nvme0n1      # create two new partitions (partitions p3 and p4 on this disk)
-                            # use sub-commands "m, p (print), n (new, -> p (primary partition)),
-                            # p (print)".... finally "w" (write)
-                            # check for new devices in /dev/  (/dev/nvme0n1p3, p4)
-
-    partprobe               # inform OS kernel about new partitions created (alternative is to reboot the system)
-#### 1
-    mkfs -t ext4 /dev/nvme0n1p3
-    mkdir /new1
-    mount /dev/nvme0p3 /new1
-    mkfs -t ext4 /dev/nvme0n1p4
-    mkdir /new2
-    mount /dev/nvme0p4 /new2
-    df -Th
-    lsblk -o+FSTYPE /dev/nvme0n1p3
-    man fstab   # LINUX
-    vi /etc/fstab   # add lines for /new1 and /new2 directories
-
+    
