@@ -292,7 +292,7 @@ Solaris
 
     mkfs -t ext4 /dev/sda3
     mkdir /new1
-    mount /dev/sda3 /new1
+    mount /dev/sda3 /new1 #pokud nefunguje zkusit vytvorit novou dir /new4
     mkfs -t ext4 /dev/sda4
     mkdir /new2
     mount /dev/sda4 /new2
@@ -355,30 +355,35 @@ Solaris
 
 ### 3
 
-    newfs /dev/lofi/1
+    mkfs -t ext4 /dev/sda3
     mkdir /new1
-    mount /dev/lofi/1 /new1
+    mount /dev/sda3 /new1
     cp /etc/passwd /new1
-        umount /new1
-    dd if=/dev/zero of=/dev/rlofi/1 bs=8192 seek=1 count=1
-    dd if=/dev/zero of=/dev/rlofi/1 bs=8192 seek=32 count=1
-    mount /new1
-    fstyp /dev/rlofi/1
-    fsck -o b=32 /dev/rlofi/1
-
-    mkdir /new1/dir1
-    echo "Content of f1" >/new/dir1/f1
-    echo "Content of f2" >/new/dir1/f2
-    ls -id /new1
-    ls -i /new1
     umount /new1
+    dd if=/dev/zero of=/dev/sda3 bs=8192 seek=1 count=1
+    dd if=/dev/zero of=/dev/sda3 bs=8192 seek=32 count=1
+    mount /new1
+    
+    fsck -b 32 /dev/sda3 #nefunguje
+    fsck -p /dev/sda3
+
+
+
+    mkfs -t ext4 /dev/sda4
+    mkdir /new5/test
+    echo "Content of f1" >/new5/test/f1
+    echo "Content of f2" >/new5/test/f2
+    ls -id /new5
+    ls -i /new5
+    umount /new5
+
+
     man clri
-    clri ..............   # please not that this is a dangerous command
-    mount .............   # this should not be possible
-    fsck ..............
-    mount .............
-    ls /new/lost+found
-    ls -lRi /new1
+    clri    # na centOS nefunguje 
+    fsck /dev/sda4
+    mount /dev/sda4 /new5
+    ls /new5/lost+found
+    ls -lRi /new5
 
 ### 4
 
