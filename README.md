@@ -184,12 +184,12 @@
  Partition type: p
  Partifiton number: 3
  First sector: default
- Last sector: +125M
+ Last sector: +500M
  fdisk> n
  Partition type: p
  Partifiton number: 4
  First sector: default
- Last sector: +125M
+ Last sector: +500M
  fdisk> w
 
  partprobe
@@ -289,37 +289,26 @@ Solaris
 
 ### 1
 
-    df -h                   # find the name of the physical disk and the name of partition(s)
-    fdisk /dev/nvme0n1      # create two new partitions (partitions p3 and p4 on this disk)
-                            # use sub-commands "m, p (print), n (new, -> p (primary partition)),
-                            # p (print)".... finally "w" (write)
-                            # check for new devices in /dev/  (/dev/nvme0n1p3, p4)
 
-    partprobe               # inform OS kernel about new partitions created (alternative is to reboot the system)
-
-    mkfs -t ext4 /dev/nvme0n1p3
+    mkfs -t ext4 /dev/sda3
     mkdir /new1
-    mount /dev/nvme0p3 /new1
-    mkfs -t ext4 /dev/nvme0n1p4
+    mount /dev/sda3 /new1
+    mkfs -t ext4 /dev/sda4
     mkdir /new2
-    mount /dev/nvme0p4 /new2
+    mount /dev/sda4 /new2
     df -Th
-    lsblk -o+FSTYPE /dev/nvme0n1p3
+    lsblk -o+FSTYPE /dev/sda3
     man fstab   # LINUX
     vi /etc/fstab   # add lines for /new1 and /new2 directories
-    touch /new1/f1
-    fssnap –o bs=/var/tmp /new1
-    mkdir /new1snap
-    mount -o ro /dev/fssnap/0 /new1snap
-    ls -l /new1snap
+    reboot
 
 
 ### 2
     
     lsblk /dev/nvme0n1
-    pvcreate /dev/nvme0n1p3 /dev/nvme0n1p4      # initialize new physical volumes /dev/nvme0n1p3 and /dev/nvme0n1p4
+    pvcreate /dev/sda3 /dev/sda4      
     pvdisplay; pvs; pgscan
-    vgcreate VG-BIE-ADU /dev/nvme0n1p3 /dev/nvme0n1p4   # create a new volume group
+    vgcreate VG-BIE-ADU /dev/sda3 /dev/sda4   # create a new volume group
     vgdisplay; vgs; vgscan       # display the status of new volume group
     lvcreate -L 200m VG-BIE-ADU
     lvcreate -L 300m VG-BIE-ADU
@@ -333,16 +322,23 @@ Solaris
     cp /etc/passwd /new1
     df -Th
     lsblk -o+FSTYPE /dev/VG-BIE-ADU/lvol0
+    blkid 
+    vi /etc/fstab # add lines for /new1 and /new2 directories
+    reboot
+
+
 
     df -Th
     vgdisplay
     lvdisplay
     lvextend -L +50M /dev/VG-BIE-ADU/lvol0  # lvol0 is extended *by* 50MB
-    resize2fs /dev/VG-BIE-ADU/lvol0
+    lvreduce -L -50M --resizefs /dev/VG-BIE-ADU/lvol0  # lvol0 is reduced *by* 50MB
     df -h
 
     df -Th
-    lvcreate -s -L 200M -n snap1 VG-BIE-ADU
+    lvcreate --snapshot /dev/VG-BIE-ADU/lvol0 -L 200M -n snap1
+
+
     lvdisplay; lvs; lvscan
     vgdisplay
     vdisplay; vgs; vgscan
@@ -567,7 +563,6 @@ Solaris
 
     mdadm -a /dev/md0 -l5 -n3 /dev/nvme0n1p11
 
-### 5
 
 #### 0a
 
