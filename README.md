@@ -605,12 +605,12 @@ lvcreate -L 100m VG-BIE-ADU
 ### 2
 
     crontab -l > crontab_backup.txt
-    crontab -e
+    crontab -e # * * * * * echo "1 minute passed" > /dev/tty6
     echo "sudo reboot" | at 16:15
     atq
-    atrm <job_number>
-    echo "lab9user1" | sudo tee -a /etc/cron.deny
-    echo "lab9user1" | sudo tee -a /etc/at.deny
+    atrm 1
+    vi /etc/cron.deny #lab9user1
+    vi /etc/at.deny #lab9user1
     su - lab9user1
     crontab -e
 
@@ -639,10 +639,19 @@ lvcreate -L 100m VG-BIE-ADU
     date
     cd /etc         # why this does not work?
 
+    ctrl+d
+
 ### 4
 
-    :(){ :|:& };:
-    sudo nano /etc/security/limits.conf # *          hard    nproc       500
-    sudo nano /etc/security/limits.d/20-nproc.conf # *          hard    nproc       500
-    sudo reboot
     ulimit -a
+    :(){ :|:& };:
+
+    vi /etc/security/limits.conf # *    hard    nproc   500
+    reboot
+    su student
+    ulimit -a
+
+    # ulimit -S -u 500     
+    
+    :(){ :|:& };:
+    ctrl+c
