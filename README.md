@@ -406,7 +406,7 @@ lvcreate -L 100m VG-BIE-ADU
 
 
 
-#### A.1
+### A.1
     lvdisplay VG0     # display logical volumes in volume group VG0
     mdadm -C /dev/md0 -l1 -n2 /dev/VG0/lvol0 /dev/VG0/lvol1
     mdadm -D /dev/md0
@@ -428,7 +428,7 @@ lvcreate -L 100m VG-BIE-ADU
     mdadm --stop /dev/md0
     mdadm -Ds
 
-#### A.2
+### A.2
 
     mdadm -C -v /dev/md0 -l5 -n3 /dev/VG0/lvol3 /dev/VG0/lvol4 /dev/VG0/lvol5
     mdadm -D /dev/md0
@@ -446,7 +446,7 @@ lvcreate -L 100m VG-BIE-ADU
     mdadm -Ds
 
 
-#### B
+### B
     sudo fdisk /dev/nvme0n1
     n
     p
@@ -541,7 +541,7 @@ lvcreate -L 100m VG-BIE-ADU
     fd
 
     w
-#### B.1
+### B.1
 
 
     mdadm -C /dev/md0 -l1 -n2 /dev/sda5 /dev/sda6
@@ -561,7 +561,7 @@ lvcreate -L 100m VG-BIE-ADU
     mdadm --stop /dev/md0
     mdadm -Ds
 
-#### B.2
+### B.2
 
     mdadm -C /dev/md0 -l1 -n2 /dev/sda5 /dev/sda6
     mdadm -C /dev/md1 -l1 -n2 /dev/sda7 /dev/sda8
@@ -589,4 +589,60 @@ lvcreate -L 100m VG-BIE-ADU
     vgcreate vg0 /dev/md0 /dev/md1
     lvcreate -L 100m vg0 
 
-    
+
+## Cviceni 9
+
+### 0
+
+    groupadd lab9
+    useradd -m -g lab9 lab9user1
+    passwd lab9user1 #thakurova22
+    useradd -m -g lab9 lab9user2
+    passwd lab9user1 #thakurova22
+    useradd -m -g lab9 lab9user3
+    passwd lab9user1 #thakurova22
+
+### 2
+
+    crontab -l > crontab_backup.txt
+    crontab -e
+    echo "sudo reboot" | at 16:15
+    atq
+    atrm <job_number>
+    echo "lab9user1" | sudo tee -a /etc/cron.deny
+    echo "lab9user1" | sudo tee -a /etc/at.deny
+    su - lab9user1
+    crontab -e
+
+
+### 3
+
+    mkdir /newroot    # create a directory for new root
+    cd /newroot
+    mkdir bin lib lib64
+
+    ldd /bin/ls   # list dynamic dependencies (shared libraries) for executables to be used in /newroot
+    ldd /bin/date
+    ldd /bin/bash
+    ldd /bin/who
+    ldd /bin/ps
+
+    cd /usr/lib
+    find . | cpio -pVdum /newroot/lib # copy all libraries from */lib* with all atributes (owner, access rights, times stamps, ... )
+
+    cd /usr/lib64
+    find . | cpio -pVdum /newroot/lib64 # copy all libraries from */lib64* with all atributes (owner, access rights, times stamps, ... )
+
+    chroot /newroot   # change root for */newroot*
+    ls
+    who
+    date
+    cd /etc         # why this does not work?
+
+### 4
+
+    :(){ :|:& };:
+    sudo nano /etc/security/limits.conf # *          hard    nproc       500
+    sudo nano /etc/security/limits.d/20-nproc.conf # *          hard    nproc       500
+    sudo reboot
+    ulimit -a
