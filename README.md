@@ -117,9 +117,13 @@
 
 ### 2
 
-    echo "super_reader::::" >> /etc/security/prof_attr
-    echo "super_reader:suser:cmd:::/usr/bin/more:euid=0" >> /etc/security/exec_attr
-    usermod -P super_reader user1
+    echo "read_any_file:R0:::" >> /etc/security/prof_attr.d/local-entries
+    echo "read_any_file:solaris:cmd:R0::/usr/bin/less:euid=0" >> /etc/security/exec_attr.d/local-entries
+    usermod -P read_any_file -s /usr/bin/pfbash user3
+    profiles
+    roles
+    more /etc/shadow
+    less /etc/shadow
 
 ### 3
 
