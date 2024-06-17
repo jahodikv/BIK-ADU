@@ -95,19 +95,25 @@
 
     cat /home/user1/shadow_copy
 
-## Cviceni 3
+## Cviceni 3 Solaris
+
+### 0
+    mkdir /export/home/user1
+    useradd -m -d /export/home/user1 -s /bin/pfksh user1
+    passwd user1 # !1Thakurova
+    mkdir /export/home/user2
+    useradd -m -d /export/home/user2 -s /bin/pfksh user2
+    passwd user2 # !1Thakurova
+    useradd -m -d /export/home/user3 -s /bin/pfksh user3
+    passwd user3 # !1Thakurova
 
 ### 1
 
-    mkdir /export/home/user1
-    useradd -m -d /export/home/user1 -s /bin/pfksh user1
-    passwd user1
-    mkdir /export/home/user2
-    useradd -m -d /export/home/user2 -s /bin/pfksh user2
-    passwd user2
-    tar cvf backup.tar /etc/user_attr
-    vi /etc/user_attr
-    ssh root@localhost
+    cp /etc/user_attr /export/home/
+    vi /etc/user_attr # root::::type=role student::::roles=root 
+    reboot # vyzkousej root prihlaseni
+    ssh root@localhost # SSH mi nefunguje na Virtualboxu
+
 
 ### 2
 
