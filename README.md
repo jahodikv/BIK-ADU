@@ -252,40 +252,69 @@
     Click on Controller: SATA, then + (Add hard disk) and then Create Disk Image.
     Choose VMDK and Fixed Size. Use about 500MB a let it be created (Create).
     Confirm, start CentOs.
-    lsblk
     ls -l /dev
 
 ### 4 
 
-
-Solaris
-
+    format
     fdisk /dev/rdsk/c1t2d0p0
 
     fdisk> 1
-    Do you wish to create a partition on /dev/rdsk/c1t2d0p0? (Y/N): Y
-    Enter partition number (1-4): 1
-    Enter starting cylinder (default 0): <Press Enter>
-    Enter partition size in % (1-100%) or kilobytes (xxK) or megabytes (xxM) or gigabytes (xxG): 20%
-
+    Select the partition type to create:
+    1=SOLARIS2   2=UNIX      3=PCIXOS     4=Other        5=DOS12
+    6=DOS16      7=DOSEXT    8=DOSBIG     9=DOS16LBA     A=x86 Boot
+    B=Diagnostic C=FAT32     D=FAT32LBA   E=DOSEXTLBA    F=EFI (Protective)
+    G=EFI_SYS    0=Exit? 1
+    
+    Specify the percentage of disk to use for this partition
+    (or type "c" to specify the size in cylinders). 20
+    
+    Should this become the active partition? If yes, it will be 
+    activated each time the computer is reset or turned on.
+    Please type "y" or "n". n
+ 
+    fdisk> 1
+    Select the partition type to create:
+    1=SOLARIS2   2=UNIX      3=PCIXOS     4=Other        5=DOS12
+    6=DOS16      7=DOSEXT    8=DOSBIG     9=DOS16LBA     A=x86 Boot
+    B=Diagnostic C=FAT32     D=FAT32LBA   E=DOSEXTLBA    F=EFI (Protective)
+    G=EFI_SYS    0=Exit? 1
+    
+    Specify the percentage of disk to use for this partition
+    (or type "c" to specify the size in cylinders). 20
+    
+    Should this become the active partition? If yes, it will be 
+    activated each time the computer is reset or turned on.
+    Please type "y" or "n". n
 
     fdisk> 1
-    Do you wish to create a partition on /dev/rdsk/c1t2d0p0? (Y/N): Y
-    Enter partition number (1-4): 2
-    Enter starting cylinder (default <next available>): <Press Enter>
-    Enter partition size in % (1-100%) or kilobytes (xxK) or megabytes (xxM) or gigabytes (xxG): 20%
+    Select the partition type to create:
+    1=SOLARIS2   2=UNIX      3=PCIXOS     4=Other        5=DOS12
+    6=DOS16      7=DOSEXT    8=DOSBIG     9=DOS16LBA     A=x86 Boot
+    B=Diagnostic C=FAT32     D=FAT32LBA   E=DOSEXTLBA    F=EFI (Protective)
+    G=EFI_SYS    0=Exit? 1
+    
+    Specify the percentage of disk to use for this partition
+    (or type "c" to specify the size in cylinders). 20
+    
+    Should this become the active partition? If yes, it will be 
+    activated each time the computer is reset or turned on.
+    Please type "y" or "n". n
 
     fdisk> 1
-    Do you wish to create a partition on /dev/rdsk/c1t2d0p0? (Y/N): Y
-    Enter partition number (1-4): 3
-    Enter starting cylinder (default <next available>): <Press Enter>
-    Enter partition size in % (1-100%) or kilobytes (xxK) or megabytes (xxM) or gigabytes (xxG): 20%
+    Select the partition type to create:
+    1=SOLARIS2   2=UNIX      3=PCIXOS     4=Other        5=DOS12
+    6=DOS16      7=DOSEXT    8=DOSBIG     9=DOS16LBA     A=x86 Boot
+    B=Diagnostic C=FAT32     D=FAT32LBA   E=DOSEXTLBA    F=EFI (Protective)
+    G=EFI_SYS    0=Exit? 1
+    
+    Specify the percentage of disk to use for this partition
+    (or type "c" to specify the size in cylinders). 20
+    
+    Should this become the active partition? If yes, it will be 
+    activated each time the computer is reset or turned on.
+    Please type "y" or "n". n
 
-    fdisk> 1
-    Do you wish to create a partition on /dev/rdsk/c1t2d0p0? (Y/N): Y
-    Enter partition number (1-4): 4
-    Enter starting cylinder (default <next available>): <Press Enter>
-    Enter partition size in % (1-100%) or kilobytes (xxK) or megabytes (xxM) or gigabytes (xxG): 20%
 
     fdisk> 6
 
@@ -293,7 +322,7 @@ Solaris
 
 
 
-### 5
+### 5 no Solaris only Centos
 
 
     df -h                   # find the name of the physical disk and the name of partition(s)
@@ -308,7 +337,7 @@ Solaris
 
 ### 6 
 
-    sudo fdisk -l /dev/sdb
+    sudo fdisk -l /dev/rdsk/c1t2d0p0
     sudo dd if=/dev/sdb of=jahodik.mbr bs=512 count=1
     xxd jahodik.mbr
 
