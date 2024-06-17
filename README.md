@@ -646,6 +646,17 @@ lvcreate -L 100m VG-BIE-ADU
     vgcreate vg0 /dev/md0 /dev/md1
     lvcreate -L 100m vg0 
 
+## Cviceni 6 Solaris
+
+
+### 0 preparation
+
+    Run VirtualBox, but do not start virtual Solaris machine
+    Create and attach one more virtual disk
+    (SOLARIS/settings/storage/add_hard_disk/create_new_disk/VMDK/fixed_size - name: Solaris-disk002, size approx. 2GB)
+
+
+
 
 ## Cviceni 9
 
