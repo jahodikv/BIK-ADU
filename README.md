@@ -120,6 +120,7 @@
     echo "read_any_file:R0:::" >> /etc/security/prof_attr.d/local-entries
     echo "read_any_file:solaris:cmd:R0::/usr/bin/less:euid=0" >> /etc/security/exec_attr.d/local-entries
     usermod -P read_any_file -s /usr/bin/pfbash user3
+    su - user3
     profiles
     roles
     more /etc/shadow
@@ -127,9 +128,19 @@
 
 ### 3
 
-    roleadd -m -d /export/home/ctenar -P super_reader -s /bin/pfksh ctenar
-    passwd ctenar
-    usermod -R ctenar user1
+    roleadd -m  -P read_any_file -s /usr/bin/pfbash reader
+    passwd reader # !1Thakurova
+    usermod -R  reader user2
+    su - user2
+    id
+    roles
+    less /etc/shadow
+    cat /etc/shadow
+    su - reader
+    roles
+    id
+    less /etc/shadow
+    cat /etc/shadow
 
 ### 6
 
