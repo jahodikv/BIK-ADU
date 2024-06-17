@@ -158,7 +158,7 @@
 ### 2
 
     cd /dev
-    ls -l /dev/zero
+    ls -l /dev/zero #cisla oddelena carkou major minor
     sudo mknod only_zeroes c 1 5
     dd if=only_zeroes bs=1k  count=32k of=/var/tmp/32MBzeroes
     od -cx /var/tmp/32MBzeroes
@@ -237,8 +237,8 @@
 ### 2
 
     cd /dev
-    ls -l /dev/zero
-    sudo mknod only_zeroes c 1 5
+    ls -lL /dev/zero #cisla oddelena carkou major minor
+    sudo mknod only_zeroes c 118 12
     dd if=only_zeroes bs=1k  count=32k of=/var/tmp/32MBzeroes
     od -cx /var/tmp/32MBzeroes
 
