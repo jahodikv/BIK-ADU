@@ -142,9 +142,16 @@
     less /etc/shadow
     cat /etc/shadow
 
-### 6
+### 7
 
     man ppriv
+    su - student 
+    ppriv -v $$
+    su - root
+    ppriv -s I+file_dac_read 1578
+    su - student 
+    ppriv -v $$
+    cat /etc/shadow
 
 ## Cviceni 4 Linux CentOS
 
