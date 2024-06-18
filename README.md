@@ -446,20 +446,20 @@
 
 ### A.0 preparation
 
-fdisk /dev/sda
+    fdisk /dev/sda
 
-partprobe
+    partprobe
 
-pvcreate /dev/sda3 /dev/sda4      
-pvdisplay; pvs; pgscan
-vgcreate VG0 /dev/sda3 /dev/sda4 
-lvcreate -L 100m VG-BIE-ADU 
-lvcreate -L 100m VG-BIE-ADU 
-lvcreate -L 100m VG-BIE-ADU 
-lvcreate -L 100m VG-BIE-ADU 
-lvcreate -L 100m VG-BIE-ADU 
-lvcreate -L 100m VG-BIE-ADU 
-lvcreate -L 100m VG-BIE-ADU 
+    pvcreate /dev/sda3 /dev/sda4      
+    pvdisplay; pvs; pgscan
+    vgcreate VG0 /dev/sda3 /dev/sda4 
+    lvcreate -L 100m VG-BIE-ADU 
+    lvcreate -L 100m VG-BIE-ADU 
+    lvcreate -L 100m VG-BIE-ADU 
+    lvcreate -L 100m VG-BIE-ADU 
+    lvcreate -L 100m VG-BIE-ADU 
+    lvcreate -L 100m VG-BIE-ADU 
+    lvcreate -L 100m VG-BIE-ADU 
 
 
 
