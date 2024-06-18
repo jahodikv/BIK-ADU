@@ -759,19 +759,20 @@ lvcreate -L 100m VG-BIE-ADU
     zfs create pool1/fs1/fs3
     zfs get all pool1/fs1/fs3
     zfs set quota=50mb pool1/fs1
-    ........ reservation .......
+    zfs create pool1/fs2
+    zfs set mountpoint=/fs2 pool1/fs2
     df -k
     zfs list
 
 ### 4
 
     man zpool
-    zpool detach pool2 /dev/dsk/c1t2d0p2
+    zpool detach pool2 /dev/dsk/c1t3d0p2
     df -h; zpool status
-    zpool add -f pool2 /dev/dsk/c1t2d0p2
+    zpool add -f pool2 /dev/dsk/c1t3d0p2
     df -h; zpool status
-    zpool attach pool2 /dev/dsk/c1t2d0p1 /dev/dsk/c1t2d0p3
-    zpool attach pool2 /dev/dsk/c1t2d0p2 /dev/dsk/c1t2d0p4
+    zpool attach pool2 /dev/dsk/c1t3d0p1 /dev/dsk/c1t3d0p3
+    zpool attach pool2 /dev/dsk/c1t3d0p2 /dev/dsk/c1t3d0p4
     df -h; zpool status
 
 
