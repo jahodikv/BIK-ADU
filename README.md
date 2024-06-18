@@ -732,7 +732,7 @@ lvcreate -L 100m VG-BIE-ADU
     zpool list
     zpool status
     zpool add -f pool1 /var/tmp/disk3  # adding file to a pool from partitions (option *-f* is needed)
-    
+
     zpool status
     zpool add -f pool2 /dev/dsk/c1t3d0p3 # adding a partition to a pool created from files (option *-f* is needed)
 
@@ -743,10 +743,14 @@ lvcreate -L 100m VG-BIE-ADU
 
 ### 2
     
-    zpool create pool1 mirror ... ...
-    zpool create pool2 raidz ... ... ...
-    zpool add -f pool2 raidz .....
+    zpool create pool1 mirror /dev/dsk/c1t3d0p1 /dev/dsk/c1t3d0p2
+    zpool create pool2 raidz /var/tmp/disks/disk1 /var/tmp/disks/disk2 /var/tmp/disks/disk3
+    zpool add -f pool2 raidz /var/tmp/disks/disk4 /var/tmp/disks/disk5
     zpool status
+    zpool destroy pool1
+    zpool create -f pool1 /var/tmp/disks/disk6 mirror /var/tmp/disks/disk7 /var/tmp/disks/disk8
+    zpool add -f pool1 raidz /var/tmp/disks/disk9 /var/tmp/disks/disk10
+    zpool status pool1 
 
 ### 3
     
