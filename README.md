@@ -656,6 +656,121 @@ lvcreate -L 100m VG-BIE-ADU
     (SOLARIS/settings/storage/add_hard_disk/create_new_disk/VMDK/fixed_size - name: Solaris-disk002, size approx. 2GB)
 
 
+    format
+    fdisk /dev/rdsk/c1t3d0p0
+
+    fdisk> 1
+    Select the partition type to create:
+    1=SOLARIS2   2=UNIX      3=PCIXOS     4=Other        5=DOS12
+    6=DOS16      7=DOSEXT    8=DOSBIG     9=DOS16LBA     A=x86 Boot
+    B=Diagnostic C=FAT32     D=FAT32LBA   E=DOSEXTLBA    F=EFI (Protective)
+    G=EFI_SYS    0=Exit? 1
+    
+    Specify the percentage of disk to use for this partition
+    (or type "c" to specify the size in cylinders). 20
+    
+    Should this become the active partition? If yes, it will be 
+    activated each time the computer is reset or turned on.
+    Please type "y" or "n". n
+
+    fdisk> 1
+    Select the partition type to create:
+    1=SOLARIS2   2=UNIX      3=PCIXOS     4=Other        5=DOS12
+    6=DOS16      7=DOSEXT    8=DOSBIG     9=DOS16LBA     A=x86 Boot
+    B=Diagnostic C=FAT32     D=FAT32LBA   E=DOSEXTLBA    F=EFI (Protective)
+    G=EFI_SYS    0=Exit? 1
+    
+    Specify the percentage of disk to use for this partition
+    (or type "c" to specify the size in cylinders). 20
+    
+    Should this become the active partition? If yes, it will be 
+    activated each time the computer is reset or turned on.
+    Please type "y" or "n". n
+
+    fdisk> 1
+    Select the partition type to create:
+    1=SOLARIS2   2=UNIX      3=PCIXOS     4=Other        5=DOS12
+    6=DOS16      7=DOSEXT    8=DOSBIG     9=DOS16LBA     A=x86 Boot
+    B=Diagnostic C=FAT32     D=FAT32LBA   E=DOSEXTLBA    F=EFI (Protective)
+    G=EFI_SYS    0=Exit? 1
+    
+    Specify the percentage of disk to use for this partition
+    (or type "c" to specify the size in cylinders). 20
+    
+    Should this become the active partition? If yes, it will be 
+    activated each time the computer is reset or turned on.
+    Please type "y" or "n". n
+
+    fdisk> 1
+    Select the partition type to create:
+    1=SOLARIS2   2=UNIX      3=PCIXOS     4=Other        5=DOS12
+    6=DOS16      7=DOSEXT    8=DOSBIG     9=DOS16LBA     A=x86 Boot
+    B=Diagnostic C=FAT32     D=FAT32LBA   E=DOSEXTLBA    F=EFI (Protective)
+    G=EFI_SYS    0=Exit? 1
+    
+    Specify the percentage of disk to use for this partition
+    (or type "c" to specify the size in cylinders). 20
+    
+    Should this become the active partition? If yes, it will be 
+    activated each time the computer is reset or turned on.
+    Please type "y" or "n". n
+
+    fdisk> 6
+
+    fdisk /dev/rdsk/c1t3d0p0
+    mkdir /var/tmp/disks
+    for i in 1 2 3 4 5 6 7 8 9 10
+    do
+        mkfile 200m /var/tmp/disks/disk$i
+    done
+
+### 1
+
+    zpool create pool1  /dev/dsk/c1t3d0p1 /dev/dsk/c1t3d0p2 # use block devices
+    zpool create pool2  /var/tmp/disks/disk1 /var/tmp/disks/disk2
+    df -h | grep pool
+    zpool list
+    zpool status
+    zpool add -f pool1 /var/tmp/disk3  # adding file to a pool from partitions (option *-f* is needed)
+    
+    zpool status
+    zpool add -f pool2 /dev/dsk/c1t3d0p3 # adding a partition to a pool created from files (option *-f* is needed)
+
+    zpool status
+    zpool history
+    zpool destroy pool1 pool2
+
+
+### 2
+    
+    zpool create pool1 mirror ... ...
+    zpool create pool2 raidz ... ... ...
+    zpool add -f pool2 raidz .....
+    zpool status
+
+### 3
+    
+    zpool get all pool1
+    zfs create pool1/fs1
+    zfs create pool1/fs1/fs3
+    zfs get all pool1/fs1/fs3
+    zfs set quota=50mb pool1/fs1
+    ........ reservation .......
+    df -k
+    zfs list
+
+### 4
+
+    man zpool
+    zpool detach pool2 /dev/dsk/c1t2d0p2
+    df -h; zpool status
+    zpool add -f pool2 /dev/dsk/c1t2d0p2
+    df -h; zpool status
+    zpool attach pool2 /dev/dsk/c1t2d0p1 /dev/dsk/c1t2d0p3
+    zpool attach pool2 /dev/dsk/c1t2d0p2 /dev/dsk/c1t2d0p4
+    df -h; zpool status
+
+
 
 
 ## Cviceni 9
