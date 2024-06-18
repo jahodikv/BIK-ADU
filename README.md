@@ -179,48 +179,48 @@
 ### 4 
 
 
- fdisk /dev/sdb
- fdisk> n
- Partition type: p
- Partifiton number: 1
- First sector: default
- Last sector: +125M
- fdisk> n
- Partition type: p
- Partifiton number: 2
- First sector: default
- Last sector: +125M
- fdisk> n
- Partition type: p
- Partifiton number: 3
- First sector: default
- Last sector: +125M
- fdisk> n
- Partition type: p
- Partifiton number: 4
- First sector: default
- Last sector: +125M
+    fdisk /dev/sdb
+    fdisk> n
+    Partition type: p
+    Partifiton number: 1
+    First sector: default
+    Last sector: +125M
+    fdisk> n
+    Partition type: p
+    Partifiton number: 2
+    First sector: default
+    Last sector: +125M
+    fdisk> n
+    Partition type: p
+    Partifiton number: 3
+    First sector: default
+    Last sector: +125M
+    fdisk> n
+    Partition type: p
+    Partifiton number: 4
+    First sector: default
+    Last sector: +125M
 
- fdisk> w
+    fdisk> w
 
 
 ### 5
 
- lsblk
- fdisk /dev/sda
- fdisk> n
- Partition type: p
- Partifiton number: 3
- First sector: default
- Last sector: +500M
- fdisk> n
- Partition type: p
- Partifiton number: 4
- First sector: default
- Last sector: +500M
- fdisk> w
+    lsblk
+    fdisk /dev/sda
+    fdisk> n
+    Partition type: p
+    Partifiton number: 3
+    First sector: default
+    Last sector: +500M
+    fdisk> n
+    Partition type: p
+    Partifiton number: 4
+    First sector: default
+    Last sector: +500M
+    fdisk> w
 
- partprobe
+    partprobe
 
 
 
