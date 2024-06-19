@@ -842,3 +842,39 @@
     
     :(){ :|:& };:
     ctrl+c
+
+## Cviceni 10
+
+### 1.2
+
+    ps -ef | grep sshd
+    kill -9 508
+    svcs -a | grep ssh
+    tail -f `svcs -L network/ssh` # run in a different terminal window
+    svcadm disable network/ssh
+    vi /etc/ssh/sshd_config
+    svcadm enable network/ssh
+
+### 1.3
+
+    ls -li /etc/init.d
+    ls -li /etc/rc2.ds
+    cd /etc/init..d
+    cp acct zemanek
+    vi zemanek
+        ...
+        exec >/dev/pts/2
+        ...
+        'start')
+        echo "Service XY is being started"
+        banner "START"
+        banner `date +%R`
+        sleep 3
+        ;;
+        ...
+    ln /etc/init.d/zemanek /etc/rc2.d/S99zemanek
+    ln /etc/init.d/zemanek /etc/rc0.d/K05zemanek
+
+### 1.4
+
+    svcs -a | grep zemanek
