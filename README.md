@@ -776,6 +776,25 @@
     zpool attach pool2 /dev/dsk/c1t3d0p2 /dev/dsk/c1t3d0p4
     df -h; zpool status
 
+## Cviceni 7
+
+    #For some reason am not able to run the lab on my VMs however I can run it differt way. At least they can ping each other.
+
+    #Virtual host adapter dhcp
+    #Host only network - Virtual host adapter on both VMs
+
+    #On solaris enable dhcp 
+    ipadm create-addr -T dhcp net0/dhcp
+    ipadm show-addr
+
+    # now they can ping between each other
+
+## Cviceni 8
+
+    #I am not able to do the lab because I do not have the lab 7 done correctly.
+
+
+
 
 ## Cviceni 9
 
@@ -813,7 +832,7 @@
     ldd /bin/bash
     ldd /bin/who
     ldd /bin/ps
-
+3
     cd /usr/lib
     find . | cpio -pVdum /newroot/lib # copy all libraries from */lib* with all atributes (owner, access rights, times stamps, ... )
 
