@@ -1,6 +1,10 @@
 # BIK-ADU
 
+Students become familiar with the internal structure of Unix-like operating systems and administration of their basic subsystems. The information presented during lectures will be trained during seminars on practical examples tested in administrator mode in Solaris and/or Linux operating system.
 
+Students obtain theoretical and practical knowledge of tools used for monitoring, analyzing and tuning the system as well as implementation and administration of file systems, disk subsystems, processes, memory, network services, shared filesystems, name services, remote access, virtualization and boot process.
+
+**Final grade: B**
 
 ## Cviceni 1
 
